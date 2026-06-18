@@ -1,0 +1,80 @@
+module dff (reset, clock, d, q, 
+
+qb); input reset, clock, d; 
+
+output q,
+
+qb; reg q; 
+
+wire qb;
+
+always @ (posedge clock) 
+
+begin
+
+if 
+
+(reset) 
+
+q<=1'b 
+
+0;
+
+else 
+
+q<=d; 
+
+end 
+
+assign 
+
+qb=~q;
+
+endmodule
+
+
+module dff_tb; 
+
+reg clock, reset, 
+
+d; wire q, qb;
+
+dff uut (reset, clock, d, q, 
+
+qb); initial
+
+begin 
+
+clock=1'b1; 
+
+reset=1'b0; 
+
+end
+
+always #5 clock=~clock;
+
+always #40 reset=~reset; 
+
+initial begin
+
+#20 d =1'b1;
+
+#20 d =1'b0;
+
+#30 d =1'b1;
+
+#30 d =1'b0;
+
+End 
+
+initial 
+
+begin
+
+$monitor ($time, "reset=%b clock=%b d=%b q=%b 
+
+qb=%b", reset, clock, d, q, qb);
+
+end 
+
+endmodule
